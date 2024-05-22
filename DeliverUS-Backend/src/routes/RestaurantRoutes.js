@@ -41,6 +41,12 @@ const loadFileRoutes = function (app) {
       RestaurantMiddleware.restaurantHasNoOrders,
       RestaurantMiddleware.checkRestaurantOwnership,
       RestaurantController.destroy)
+    .patch(
+      isLoggedIn,
+      hasRole('owner'),
+      checkEntityExists(Restaurant, 'restaurantId'),
+      RestaurantMiddleware.checkRestaurantOwnership,
+      RestaurantController.switchOnline)
 
   app.route('/restaurants/:restaurantId/orders')
     .get(
